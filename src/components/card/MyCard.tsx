@@ -1,10 +1,23 @@
 import { Card, CardContent, Typography, Rating, Button } from "@mui/material";
-import CardImg from "../cardImg/cardImg";
+import CardImg from "../cardImg/CardImg";
 import { Link } from "react-router-dom";
-
-const MyCard = () => {
+interface CardProps {
+  item: {
+    id: number;
+    title: string;
+    price: number;
+    description: string;
+    category: string;
+    image: string;
+    rating: {
+      rate: number;
+      count: number;
+    };
+  };
+}
+const MyCard = ({ item }: CardProps) => {
   return (
-    <Link to='/product'>
+    <Link to={"/product/?id=" + item.id}>
       <Card
         sx={{
           display: "flex",
@@ -14,6 +27,7 @@ const MyCard = () => {
           transition: "all 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
           cursor: "pointer",
           boxShadow: 3,
+          height: "100%",
           ":hover": {
             boxShadow: 8,
             translate: "0px -4px",
@@ -28,10 +42,7 @@ const MyCard = () => {
             alignItems: "center",
           }}
         >
-          <CardImg
-            src='https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg'
-            height={300}
-          />
+          <CardImg src={item.image} height={300} />
           <Typography
             sx={{
               textAlign: "center",
@@ -40,12 +51,12 @@ const MyCard = () => {
               fontSize: "20px",
             }}
           >
-            Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops
+            {item.title}
           </Typography>
           <Typography sx={{ textAlign: "center", fontSize: "16px", mt: 1 }}>
-            $109.95
+            ${item.price}
           </Typography>
-          <Rating precision={0.1} value={3.4} readOnly />
+          <Rating precision={0.1} value={item.rating.rate} readOnly />
           <Button sx={{ mt: 2 }} color='primary' variant='contained'>
             Add to Cart
           </Button>

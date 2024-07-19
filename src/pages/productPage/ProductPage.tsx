@@ -1,7 +1,37 @@
 import { Box, Button, Container, Rating, Typography } from "@mui/material";
-import CardImg from "../../components/cardImg/cardImg";
-
+import CardImg from "../../components/cardImg/CardImg";
+import { useSearchParams } from "react-router-dom";
+import { getOne } from "../../API/API";
+import { useEffect, useState } from "react";
+import Loader from "../../components/loader/Loader";
+interface ProductProps {
+  id: number;
+  title: string;
+  price: number;
+  description: string;
+  category: string;
+  image: string;
+  rating: {
+    rate: number;
+    count: number;
+  };
+}
 export default function ProductPage() {
+  const [searchParams] = useSearchParams();
+  const [product, setProduct] = useState({
+    rating: { rate: 0, count: 0 },
+  } as ProductProps);
+  const [loading, setLoading] = useState(true);
+  const id = Number(searchParams.get("id"));
+
+  useEffect(() => {
+    getOne(id).then((data: ProductProps) => {
+      setProduct(data);
+      setLoading(false);
+    });
+  }, [id]);
+
+  if (loading) return <Loader />;
   return (
     <Container
       sx={{
@@ -12,10 +42,7 @@ export default function ProductPage() {
       }}
       maxWidth='lg'
     >
-      <CardImg
-        src='https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg'
-        height={500}
-      />
+      <CardImg src={product.image} height={500} width={300} />
 
       <Box>
         <Box
@@ -26,19 +53,14 @@ export default function ProductPage() {
             height: "80%",
           }}
         >
-          <Typography variant='h4'>
-            Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops
-          </Typography>
+          <Typography variant='h4'>{product.title}</Typography>
           <Typography variant='h5' sx={{ fontWeight: "bold" }}>
-            $109.95
+            ${product.price}
           </Typography>
-          <Rating precision={0.1} value={3.4} readOnly />
+          <Rating precision={0.1} value={product.rating.rate} readOnly />
           <Box>
             <Typography sx={{ fontSize: "20px" }}>Description</Typography>
-            <Typography sx={{ mt: 1 }}>
-              Your perfect pack for everyday use and walks in the forest. Stash
-              your laptop (up to 15 inches) in the padded sleeve, your everyday.
-            </Typography>
+            <Typography sx={{ mt: 1 }}>{product.description}</Typography>
           </Box>
         </Box>
         <Box

@@ -1,14 +1,30 @@
 import { Button, Container, Grid, TextField, Typography } from "@mui/material";
-import React from "react";
-
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { login } from "../../API/API";
+import { useNavigate } from "react-router";
 export default function AuthPage() {
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const user = useSelector((state: any) => state.user);
+  const log = useSelector((state: any) => state.login);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
+  useEffect(() => {
+    if (log) navigate("/");
+  }, [log]);
   const handleSubmit = (event: any) => {
     event.preventDefault();
+    login({ username, password }).then((data: any) => {
+      dispatch({
+        type: "LOGIN",
+        payload: {
+          user: { username: data.user, userId: data.sub },
+        },
+      });
+    });
   };
-
   return (
     <Container maxWidth='xs' sx={{ mt: 4 }}>
       <Typography variant='h5' component='h2' gutterBottom>

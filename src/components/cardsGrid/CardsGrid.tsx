@@ -1,7 +1,7 @@
 import { Button, Grid } from "@mui/material";
 import MyCard from "../card/MyCard";
 
-const CardsGrid = () => {
+const CardsGrid = ({ products }: { products: Array<any> }) => {
   return (
     <>
       <Grid
@@ -12,9 +12,9 @@ const CardsGrid = () => {
         container
         spacing={{ xs: 1, sm: 2, md: 3 }}
       >
-        {[...Array(8)].map((_, index) => (
+        {products.map((item, index) => (
           <Grid item xs={4} sm={4} md={4} key={index}>
-            <MyCard />
+            <MyCard item={item} />
           </Grid>
         ))}
       </Grid>
