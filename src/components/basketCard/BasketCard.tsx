@@ -2,6 +2,7 @@ import { Container, Box, Typography, Rating, Button } from "@mui/material";
 import CardImg from "../cardImg/CardImg";
 import { getOne } from "../../API/API";
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 const BasketCard = ({ products }: any) => {
   const [productData, setProductData] = useState({} as any);
   const [count, setCount] = useState(1);
@@ -14,12 +15,25 @@ const BasketCard = ({ products }: any) => {
   const handleCount = (type: string) => {
     if (type === "plus") {
       setCount(count + 1);
+      dispatch({
+        type: "CHANGE_QUANTITY",
+        payload: { productId: productData.id, quantity: count + 1 },
+      });
     } else {
       if (count > 1) {
         setCount(count - 1);
+        dispatch({
+          type: "CHANGE_QUANTITY",
+          payload: { productId: productData.id, quantity: count - 1 },
+        });
       }
     }
   };
+  const dispatch = useDispatch();
+  const removeProduct = () => {
+    dispatch({ type: "REMOVE_FROM_BASKET", payload: productData.id });
+  };
+
   if (!productData.title) return <></>;
   return (
     <Container
@@ -72,7 +86,7 @@ const BasketCard = ({ products }: any) => {
         }}
       >
         <Typography sx={{ fontSize: "20px" }}>
-          Total: ${productData.price * count}
+          Total: ${(productData.price * count).toFixed(2)}
         </Typography>
         <Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
           <Button
@@ -92,7 +106,11 @@ const BasketCard = ({ products }: any) => {
           </Button>
         </Box>
 
-        <Button sx={{ width: "100%", maxWidth: 500 }} variant='contained'>
+        <Button
+          onClick={() => removeProduct()}
+          sx={{ width: "100%", maxWidth: 500 }}
+          variant='contained'
+        >
           Remove from Cart
         </Button>
       </Box>

@@ -10,6 +10,7 @@ const NavBar = () => {
 
   const logout = () => {
     dispatch({ type: "LOGOUT" });
+    dispatch({ type: "SET_BASKET", payload: [] });
     navigate("/");
   };
   return (

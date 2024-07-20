@@ -4,6 +4,8 @@ import { useSearchParams } from "react-router-dom";
 import { getOne } from "../../API/API";
 import { useEffect, useState } from "react";
 import Loader from "../../components/loader/Loader";
+import { useDispatch, useSelector } from "react-redux";
+import MyModal from "../../components/myModal/MyModal";
 interface ProductProps {
   id: number;
   title: string;
@@ -21,14 +23,42 @@ export default function ProductPage() {
   const [product, setProduct] = useState({
     rating: { rate: 0, count: 0 },
   } as ProductProps);
+  const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(true);
   const id = Number(searchParams.get("id"));
+
+  const dispatch = useDispatch();
+  const products = useSelector((state: any) => state.basket);
+  const addToBasket = () => {
+    if (products.find((product: any) => product.productId === id)) return;
+    dispatch({
+      type: "ADD_TO_BASKET",
+      payload: { productId: id, quantity: 1 },
+    });
+    setOpen(true);
+    setInBasket(true);
+  };
+  const [inBasket, setInBasket] = useState(false);
+
+  const removeFromBasket = () => {
+    dispatch({
+      type: "REMOVE_FROM_BASKET",
+      payload: id,
+    });
+    setOpen(false);
+    setInBasket(false);
+  };
 
   useEffect(() => {
     getOne(id).then((data: ProductProps) => {
       setProduct(data);
       setLoading(false);
     });
+    if (products.find((product: any) => product.productId === id)) {
+      setInBasket(true);
+      console.log(inBasket);
+      return;
+    }
   }, [id]);
 
   if (loading) return <Loader />;
@@ -73,12 +103,28 @@ export default function ProductPage() {
             alignItems: "center",
           }}
         >
-          <Button sx={{ width: "100%", maxWidth: 500 }} variant='contained'>
-            Add to Cart
-          </Button>
+          {inBasket ? (
+            <Button
+              onClick={removeFromBasket}
+              sx={{ width: "100%", maxWidth: 500 }}
+              variant='contained'
+            >
+              Remove from Cart
+            </Button>
+          ) : (
+            <Button
+              onClick={addToBasket}
+              sx={{ width: "100%", maxWidth: 500 }}
+              variant='contained'
+            >
+              Add to Cart
+            </Button>
+          )}
+
           <Button sx={{ width: "100%", maxWidth: 500 }} variant='outlined'>
             Buy Now
           </Button>
+          <MyModal open={open} />
         </Box>
       </Box>
     </Container>

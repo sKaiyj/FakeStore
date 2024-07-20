@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { login } from "../../API/API";
 import { useNavigate } from "react-router";
+import { getCart } from "../../API/API";
 export default function AuthPage() {
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
@@ -16,12 +17,18 @@ export default function AuthPage() {
   }, [log]);
   const handleSubmit = (event: any) => {
     event.preventDefault();
-    login({ username, password }).then((data: any) => {
+    login({ username: "mor_2314", password: "83r5^_" }).then((data: any) => {
       dispatch({
         type: "LOGIN",
         payload: {
           user: { username: data.user, userId: data.sub },
         },
+      });
+      getCart(data.sub).then((data) => {
+        dispatch({
+          type: "SET_BASKET",
+          payload: data.products,
+        });
       });
     });
   };
