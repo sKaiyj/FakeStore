@@ -2,7 +2,7 @@ import { Card, CardContent, Typography, Rating, Button } from "@mui/material";
 import CardImg from "../cardImg/CardImg";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import MyModal from "../myModal/MyModal";
 interface CardProps {
   item: {

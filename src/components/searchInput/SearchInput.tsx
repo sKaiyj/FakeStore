@@ -1,4 +1,4 @@
-import { Box, Button, IconButton, InputBase, Paper } from "@mui/material";
+import { Box, IconButton, InputBase, Paper } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
