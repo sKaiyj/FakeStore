@@ -1,4 +1,11 @@
-import { Button, Container, Grid, TextField, Typography } from "@mui/material";
+import {
+  Button,
+  Container,
+  Grid,
+  Link,
+  TextField,
+  Typography,
+} from "@mui/material";
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { login } from "../../API/API";
@@ -7,8 +14,7 @@ import { getCart } from "../../API/API";
 export default function AuthPage() {
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
-  const user = useSelector((state: any) => state.user);
-  const log = useSelector((state: any) => state.login);
+  const log = useSelector((state: { login: boolean }) => state.login);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -17,7 +23,7 @@ export default function AuthPage() {
   }, [log]);
   const handleSubmit = (event: any) => {
     event.preventDefault();
-    login({ username: "mor_2314", password: "83r5^_" }).then((data: any) => {
+    login({ username, password }).then((data: any) => {
       dispatch({
         type: "LOGIN",
         payload: {
@@ -47,6 +53,7 @@ export default function AuthPage() {
               onChange={(event) => setUsername(event.target.value)}
               fullWidth
             />
+            <Typography>mor_2314</Typography>
           </Grid>
           <Grid item xs={12}>
             <TextField
@@ -57,6 +64,7 @@ export default function AuthPage() {
               onChange={(event) => setPassword(event.target.value)}
               fullWidth
             />
+            <Typography>83r5^_</Typography>
           </Grid>
           <Grid item xs={12}>
             <Button type='submit' variant='contained' color='primary' fullWidth>
@@ -65,6 +73,9 @@ export default function AuthPage() {
           </Grid>
         </Grid>
       </form>
+      <Typography sx={{ mt: 2 }}>
+        Don't have an account? <Link href='/register'>Register</Link>
+      </Typography>
     </Container>
   );
 }

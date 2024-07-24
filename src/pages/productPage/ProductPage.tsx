@@ -1,6 +1,6 @@
 import { Box, Button, Container, Rating, Typography } from "@mui/material";
 import CardImg from "../../components/cardImg/CardImg";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { getOne } from "../../API/API";
 import { useEffect, useState } from "react";
 import Loader from "../../components/loader/Loader";
@@ -24,19 +24,27 @@ export default function ProductPage() {
     rating: { rate: 0, count: 0 },
   } as ProductProps);
   const [open, setOpen] = useState(false);
+  const [openBuy, setOpenBuy] = useState(false);
+
   const [loading, setLoading] = useState(true);
   const id = Number(searchParams.get("id"));
-
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const products = useSelector((state: any) => state.basket);
+  const login = useSelector((state: { login: boolean }) => state.login);
+  const buyNow = () => {
+    setOpenBuy(true);
+  };
   const addToBasket = () => {
-    if (products.find((product: any) => product.productId === id)) return;
-    dispatch({
-      type: "ADD_TO_BASKET",
-      payload: { productId: id, quantity: 1 },
-    });
-    setOpen(true);
-    setInBasket(true);
+    if (login) {
+      setOpen(true);
+      setInBasket(true);
+      if (products.find((product: any) => product.productId === id)) return;
+      dispatch({
+        type: "ADD_TO_BASKET",
+        payload: { productId: id, quantity: 1 },
+      });
+    } else navigate("/login");
   };
   const [inBasket, setInBasket] = useState(false);
 
@@ -121,10 +129,28 @@ export default function ProductPage() {
             </Button>
           )}
 
-          <Button sx={{ width: "100%", maxWidth: 500 }} variant='outlined'>
+          <Button
+            onClick={buyNow}
+            sx={{ width: "100%", maxWidth: 500 }}
+            variant='outlined'
+          >
             Buy Now
           </Button>
-          <MyModal open={open} />
+          <MyModal
+            title={"Added to cart"}
+            open={open}
+            desciption={`You are added this "${product.title}" to your basket`}
+          />
+          <MyModal
+            title={"Buy now"}
+            onClose={() => setOpenBuy(false)}
+            open={openBuy}
+            desciption={`Buy a "${product.title}" for $${product.price} now`}
+          >
+            <Button sx={{ mt: 2 }} variant='contained'>
+              Buy Now
+            </Button>
+          </MyModal>
         </Box>
       </Box>
     </Container>

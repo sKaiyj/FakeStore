@@ -1,9 +1,24 @@
 import { Backdrop, Box, Fade, Modal, Typography } from "@mui/material";
 import React, { useEffect } from "react";
 
-const MyModal = ({ open }: { open: boolean }) => {
+const MyModal = ({
+  open,
+  title,
+  desciption,
+  children,
+  onClose,
+}: {
+  open: boolean;
+  title: string;
+  desciption: string;
+  children?: React.ReactNode;
+  onClose?: () => void;
+}) => {
   const [openModal, setOpenModal] = React.useState(false);
-  const handleClose = () => setOpenModal(false);
+  const handleClose = () => {
+    onClose !== undefined ? onClose() : null;
+    setOpenModal(false);
+  };
   useEffect(() => {
     setOpenModal(open);
   }, [open]);
@@ -36,11 +51,12 @@ const MyModal = ({ open }: { open: boolean }) => {
           }}
         >
           <Typography id='modal-modal-title' variant='h5' component='h2'>
-            Added
+            {title}
           </Typography>
           <Typography id='modal-modal-description' sx={{ mt: 2 }}>
-            You are added this product to your basket
+            {desciption}
           </Typography>
+          {children}
         </Box>
       </Fade>
     </Modal>

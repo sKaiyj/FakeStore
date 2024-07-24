@@ -11,10 +11,16 @@ const reducer = (
     login: boolean;
     user: { username: string; userId: number };
     basket: any[];
+    products: any[];
+    search: "";
+    sort: "";
   } = {
     login: false,
     user: { username: "", userId: 0 },
     basket: [],
+    products: [],
+    search: "",
+    sort: "",
   },
   action: any
 ) => {
@@ -60,6 +66,31 @@ const reducer = (
               : item
           ),
         ],
+      };
+    case "SET_PRODUCTS":
+      return {
+        ...state,
+        products: action.payload,
+      };
+    case "LOAD_PRODUCTS":
+      return {
+        ...state,
+        products: [...state.products, ...action.payload],
+      };
+    case "SEARCH":
+      return {
+        ...state,
+        search: action.payload,
+      };
+    case "SET_SORT":
+      return {
+        ...state,
+        sort: action.payload,
+      };
+    case "SET_CATEGORIES":
+      return {
+        ...state,
+        categories: action.payload,
       };
     default:
       return state;

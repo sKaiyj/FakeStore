@@ -5,3 +5,12 @@
   font-family: "Poppins", sans-serif;
   text-decoration: none;
 }
+body {
+  min-height: 100vh;
+}
+#root {
+  height: 100%;
+  display: grid;
+  grid-template-rows: min-content 1fr min-content;
+  min-height: 100vh;
+}

@@ -13,6 +13,7 @@ const router = createHashRouter([
       { path: "/product", element: <ProductPage /> },
       { path: "/login", element: <AuthPage /> },
       { path: "/basket", element: <BasketPage /> },
+      { path: "*", element: <MainPage /> },
     ],
   },
 ]);

@@ -1,8 +1,8 @@
 import { Card, CardContent, Typography, Rating, Button } from "@mui/material";
 import CardImg from "../cardImg/CardImg";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import MyModal from "../myModal/MyModal";
 interface CardProps {
   item: {
@@ -22,23 +22,34 @@ const MyCard = ({ item }: CardProps) => {
   const [inBasket, setInBasket] = useState(false);
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
-  const products = useSelector((state: any) => state.basket);
+  const products = useSelector((state: { basket: [] }) => state.basket);
+  const login = useSelector((state: { login: boolean }) => state.login);
   const navigate = useNavigate();
   useEffect(() => {
-    if (products.find((product: any) => product.productId === item.id)) {
+    if (
+      products.find(
+        (product: { productId: number }) => product.productId === item.id
+      )
+    ) {
       setInBasket(true);
-      console.log(inBasket);
       return;
-    }
-  }, []);
+    } else setInBasket(false);
+  }, [products]);
   const addToBasket = () => {
-    if (products.find((product: any) => product.productId === item.id)) return;
-    setInBasket(true);
-    dispatch({
-      type: "ADD_TO_BASKET",
-      payload: { productId: item.id, quantity: 1 },
-    });
-    setOpen(true);
+    if (login) {
+      setOpen(true);
+      if (
+        products.find(
+          (product: { productId: number }) => product.productId === item.id
+        )
+      )
+        return;
+      setInBasket(true);
+      dispatch({
+        type: "ADD_TO_BASKET",
+        payload: { productId: item.id, quantity: 1 },
+      });
+    } else navigate("/login");
   };
   const removeFromBasket = () => {
     setInBasket(false);
@@ -115,7 +126,11 @@ const MyCard = ({ item }: CardProps) => {
           </Button>
         )}
       </CardContent>
-      <MyModal open={open} />
+      <MyModal
+        title={"Added to cart"}
+        open={open}
+        desciption={`You are added this "${item.title}" to your basket`}
+      />
     </Card>
   );
 };
