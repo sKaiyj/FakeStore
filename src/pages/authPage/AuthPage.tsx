@@ -39,7 +39,10 @@ export default function AuthPage() {
     });
   };
   return (
-    <Container maxWidth='xs' sx={{ mt: 4 }}>
+    <Container
+      maxWidth='xs'
+      sx={{ mt: 7, color: "#E5E5E5", minHeight: "75vh" }}
+    >
       <Typography variant='h5' component='h2' gutterBottom>
         Login
       </Typography>
@@ -48,20 +51,22 @@ export default function AuthPage() {
           <Grid item xs={12}>
             <TextField
               label='Username'
-              variant='outlined'
+              variant='filled'
               value={username}
               onChange={(event) => setUsername(event.target.value)}
               fullWidth
+              sx={{ bgcolor: "#E5E5E5", borderRadius: "10px" }}
             />
             <Typography>mor_2314</Typography>
           </Grid>
           <Grid item xs={12}>
             <TextField
               label='Password'
-              variant='outlined'
+              variant='filled'
               type='password'
               value={password}
               onChange={(event) => setPassword(event.target.value)}
+              sx={{ bgcolor: "#E5E5E5", borderRadius: "10px" }}
               fullWidth
             />
             <Typography>83r5^_</Typography>
@@ -74,7 +79,10 @@ export default function AuthPage() {
         </Grid>
       </form>
       <Typography sx={{ mt: 2 }}>
-        Don't have an account? <Link href='/register'>Register</Link>
+        Don't have an account?{" "}
+        <Link style={{ color: "#E5E5E5" }} href='/register'>
+          Register
+        </Link>
       </Typography>
     </Container>
   );

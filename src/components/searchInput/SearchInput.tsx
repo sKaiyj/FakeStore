@@ -54,6 +54,7 @@ export default function SearchInput() {
           maxWidth: 600,
           width: "100%",
           m: "0 auto",
+          bgcolor: "#D9D9D9",
         }}
       >
         <BasicMenu categories={sortTypes} setSort={setSort}>
@@ -79,7 +80,7 @@ export default function SearchInput() {
       {categories.length === 1 ? (
         <Box
           sx={{
-            color: "primary.main",
+            color: "white",
             border: "1px solid",
             padding: "8x",
             borderRadius: "8px",
@@ -87,7 +88,7 @@ export default function SearchInput() {
             p: 1,
             mt: 1,
             fontSize: "20px",
-            ":hover": { color: "primary.dark" },
+            ":hover": { color: "#C5C5C5" },
           }}
         >
           All
@@ -96,14 +97,14 @@ export default function SearchInput() {
         <BasicMenu categories={categories} setSort={setCategory}>
           <Box
             sx={{
-              color: "primary.main",
+              color: "white",
               border: "1px solid",
               padding: "8x",
               borderRadius: "8px",
               cursor: "pointer",
               p: 1,
               fontSize: "20px",
-              ":hover": { color: "primary.dark" },
+              ":hover": { color: "#C5C5C5" },
             }}
           >
             {categorySearch[0].toUpperCase() + categorySearch.slice(1)}

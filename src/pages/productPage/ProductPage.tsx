@@ -1,5 +1,5 @@
 import { Box, Button, Container, Rating, Typography } from "@mui/material";
-import CardImg from "../../components/cardImg/CardImg";
+import CardImg from "../../components/cardImg/cardImg";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { getOne } from "../../API/API";
 import { useEffect, useState } from "react";
@@ -77,11 +77,12 @@ export default function ProductPage() {
         mt: 5,
         gap: 6,
         flexDirection: { xs: "column", md: "row" },
+        color: "#CFC5C5",
+        mb: 5,
       }}
       maxWidth='lg'
     >
       <CardImg src={product.image} height={500} width={300} />
-
       <Box>
         <Box
           sx={{
@@ -132,7 +133,7 @@ export default function ProductPage() {
           <Button
             onClick={buyNow}
             sx={{ width: "100%", maxWidth: 500 }}
-            variant='outlined'
+            variant='contained'
           >
             Buy Now
           </Button>

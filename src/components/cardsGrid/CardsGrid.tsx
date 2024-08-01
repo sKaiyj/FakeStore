@@ -27,8 +27,8 @@ const CardsGrid = ({
         ))}
       </Grid>
       {limit >= products.length ? null : (
-        <Button onClick={onLoadMore} variant='outlined' sx={{ mt: 2 }}>
-          Load More
+        <Button onClick={onLoadMore} variant='contained' sx={{ mt: 2 }}>
+          Show More
         </Button>
       )}
     </>

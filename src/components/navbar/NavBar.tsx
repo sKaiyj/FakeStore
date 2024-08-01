@@ -29,7 +29,13 @@ const NavBar = () => {
     setAnchorEl(null);
   };
   return (
-    <Box sx={{ width: "100%", height: "50px", bgcolor: "primary.main" }}>
+    <Box
+      sx={{
+        width: "100%",
+        height: "100px",
+        bgcolor: "primary.main",
+      }}
+    >
       <Container maxWidth='lg' sx={{ height: "100%" }}>
         <Box
           sx={{
@@ -44,6 +50,29 @@ const NavBar = () => {
               FakeStore
             </Typography>
           </Link>
+          <Box sx={{ display: { xs: "none", md: "flex" } }}>
+            <Link
+              style={{ color: "white", margin: "4px 20px 4px 20px" }}
+              to='/products'
+            >
+              Products
+            </Link>
+            <Link
+              style={{
+                color: "white",
+                margin: "4px 20px 4px 20px",
+              }}
+              to='/benefits'
+            >
+              Benefits
+            </Link>
+            <Link
+              style={{ color: "white", margin: "4px 20px 4px 20px" }}
+              to='/reviews'
+            >
+              Reviews
+            </Link>
+          </Box>
           <Box
             sx={{
               display: { xs: "none", md: "flex" },
@@ -52,11 +81,37 @@ const NavBar = () => {
             }}
           >
             {!login ? (
-              <Button variant='contained' color='inherit'>
-                <Link style={{ color: "black" }} to='/login'>
-                  Login
-                </Link>
-              </Button>
+              <>
+                <Button
+                  sx={{ borderRadius: "10px", fontSize: "16px", padding: 0 }}
+                  variant='contained'
+                  color='secondary'
+                >
+                  <Link
+                    style={{ color: "white", padding: "8px 30px 8px 30px" }}
+                    to='/login'
+                  >
+                    Login
+                  </Link>
+                </Button>
+                <Button
+                  sx={{
+                    borderRadius: "10px",
+                    fontSize: "16px",
+                    border: "1px solid black",
+                    padding: 0,
+                  }}
+                  variant='contained'
+                  color='primary'
+                >
+                  <Link
+                    style={{ color: "white", padding: "8px 30px 8px 30px" }}
+                    to='/login'
+                  >
+                    Sign Up
+                  </Link>
+                </Button>
+              </>
             ) : (
               <>
                 <IconButton>
@@ -74,15 +129,72 @@ const NavBar = () => {
             )}
           </Box>
           {!login ? (
-            <Button
-              sx={{ display: { xs: "flex", md: "none" } }}
-              variant='contained'
-              color='inherit'
-            >
-              <Link style={{ color: "black" }} to='/login'>
-                Login
-              </Link>
-            </Button>
+            <Box sx={{ display: { xs: "flex", md: "none" } }}>
+              <IconButton
+                id='basic-button'
+                aria-controls={open ? "basic-menu" : undefined}
+                aria-haspopup='true'
+                aria-expanded={open ? "true" : undefined}
+                onClick={handleClick}
+                sx={{
+                  color: "white",
+                }}
+              >
+                <MenuIcon />
+              </IconButton>
+              <Menu
+                id='basic-menu'
+                anchorEl={anchorEl}
+                open={open}
+                onClose={handleClose}
+                MenuListProps={{
+                  "aria-labelledby": "basic-button",
+                }}
+              >
+                <MenuItem>
+                  <Link
+                    style={{ color: "black", margin: "4px 20px 4px 20px" }}
+                    to='/products'
+                  >
+                    Products
+                  </Link>
+                </MenuItem>
+                <MenuItem>
+                  <Link
+                    style={{ color: "black", margin: "4px 20px 4px 20px" }}
+                    to='/benefits'
+                  >
+                    Benefits
+                  </Link>
+                </MenuItem>
+                <MenuItem>
+                  <Link
+                    style={{ color: "black", margin: "4px 20px 4px 20px" }}
+                    to='/reviews'
+                  >
+                    Reviews
+                  </Link>
+                </MenuItem>
+                <MenuItem>
+                  <Button
+                    sx={{
+                      display: { xs: "flex", md: "none" },
+                      p: 0,
+                      m: "auto",
+                    }}
+                    variant='contained'
+                    color='secondary'
+                  >
+                    <Link
+                      style={{ color: "white", padding: "8px 20px" }}
+                      to='/login'
+                    >
+                      Login
+                    </Link>
+                  </Button>
+                </MenuItem>
+              </Menu>
+            </Box>
           ) : (
             <Box sx={{ display: { xs: "flex", md: "none" } }}>
               <IconButton
@@ -108,9 +220,36 @@ const NavBar = () => {
                 }}
               >
                 <MenuItem onClick={handleClose}>
-                  <Typography sx={{ color: "black", fontSize: "20px" }}>
+                  <Typography
+                    sx={{ color: "black", fontSize: "20px", m: "auto" }}
+                  >
                     {user.username}
                   </Typography>
+                </MenuItem>
+
+                <MenuItem>
+                  <Link
+                    style={{ color: "black", margin: "4px 20px 4px 20px" }}
+                    to='/products'
+                  >
+                    Products
+                  </Link>
+                </MenuItem>
+                <MenuItem>
+                  <Link
+                    style={{ color: "black", margin: "4px 20px 4px 20px" }}
+                    to='/benefits'
+                  >
+                    Benefits
+                  </Link>
+                </MenuItem>
+                <MenuItem>
+                  <Link
+                    style={{ color: "black", margin: "4px 20px 4px 20px" }}
+                    to='/reviews'
+                  >
+                    Reviews
+                  </Link>
                 </MenuItem>
                 <MenuItem onClick={handleClose}>
                   <Link style={{ color: "black", width: "100%" }} to='/basket'>
@@ -123,7 +262,12 @@ const NavBar = () => {
                   </Link>
                 </MenuItem>
                 <MenuItem onClick={handleClose}>
-                  <Button onClick={logout} variant='contained' color='inherit'>
+                  <Button
+                    sx={{ width: "100%" }}
+                    onClick={logout}
+                    variant='contained'
+                    color='inherit'
+                  >
                     LogOut
                   </Button>
                 </MenuItem>

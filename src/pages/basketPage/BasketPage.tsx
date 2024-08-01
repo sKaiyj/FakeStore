@@ -44,7 +44,9 @@ export default function BasketPage() {
         mt: 2,
       }}
     >
-      <Typography variant='h4'>Your Cart</Typography>
+      <Typography variant='h4' sx={{ color: "#CFC5C5", mt: 2 }}>
+        Your Cart
+      </Typography>
       {products.length === 0 ? (
         <Typography sx={{ fontSize: "20px", mt: 2 }}>Cart is empty</Typography>
       ) : (
@@ -62,7 +64,7 @@ export default function BasketPage() {
           flexDirection: { xs: "column", md: "row" },
         }}
       >
-        <Typography sx={{ fontSize: "20px" }}>
+        <Typography sx={{ fontSize: "20px", color: "#CFC5C5" }}>
           Total: ${total.toFixed(2)}
         </Typography>
         <Button

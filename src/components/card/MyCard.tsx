@@ -1,5 +1,12 @@
-import { Card, CardContent, Typography, Rating, Button } from "@mui/material";
-import CardImg from "../cardImg/CardImg";
+import {
+  Card,
+  CardContent,
+  Typography,
+  Rating,
+  Button,
+  Box,
+} from "@mui/material";
+import CardImg from "../cardImg/cardImg";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
@@ -67,17 +74,20 @@ const MyCard = ({ item }: CardProps) => {
     <Card
       sx={{
         display: "flex",
-        p: 2,
+        p: 0,
         justifyContent: "center",
         alignItems: "center",
         transition: "all 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
         cursor: "pointer",
         boxShadow: 3,
+        borderRadius: 4,
         height: "100%",
+        bgcolor: "#5A5A5A",
         ":hover": {
           boxShadow: 8,
           translate: "0px -4px",
         },
+        position: "relative",
       }}
     >
       <CardContent
@@ -89,23 +99,46 @@ const MyCard = ({ item }: CardProps) => {
           alignItems: "center",
           height: "100%",
           gap: 1,
+          padding: 0,
+          width: "100%",
         }}
       >
         <CardImg src={item.image} height={300} />
-        <Typography
+        <Box
           sx={{
-            textAlign: "center",
-            mt: 2,
-            fontWeight: "bold",
-            fontSize: "20px",
+            display: "flex",
+            height: "100%",
+            p: 1,
+            width: "100%",
+            justifyContent: "space-between",
           }}
         >
-          {item.title}
-        </Typography>
-        <Typography sx={{ textAlign: "center", fontSize: "16px", mt: 1 }}>
-          ${item.price}
-        </Typography>
-        <Rating precision={0.1} value={item.rating.rate} readOnly />
+          <Typography
+            sx={{
+              mt: 1,
+              fontWeight: "bold",
+              fontSize: "20px",
+              color: "#E5E5E5",
+              textAlign: "start",
+            }}
+          >
+            {item.title}
+          </Typography>
+          <Typography
+            sx={{
+              textAlign: "center",
+              fontSize: "24px",
+              pl: 2,
+              alignSelf: "center",
+              color: "#33AAFF",
+            }}
+          >
+            {item.price}$
+          </Typography>
+        </Box>
+        <Box sx={{ position: "absolute", top: 300, right: 10 }}>
+          <Rating precision={0.1} value={item.rating.rate} readOnly />
+        </Box>
         {inBasket ? (
           <Button
             onClick={removeFromBasket}

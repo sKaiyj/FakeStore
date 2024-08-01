@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { RouterProvider } from "react-router-dom";
-import "./index.css";
+import "./style/index.scss";
 import router from "./router/router";
 import { ThemeProvider, createTheme } from "@mui/material";
 import store from "./store/store";
@@ -14,6 +14,17 @@ const theme = createTheme({
       md: 863,
       lg: 1200,
       xl: 1536,
+    },
+  },
+  typography: {
+    fontFamily: "Quicksand, sans-serif",
+  },
+  palette: {
+    primary: {
+      main: "#343436",
+    },
+    secondary: {
+      main: "#213047",
     },
   },
 });

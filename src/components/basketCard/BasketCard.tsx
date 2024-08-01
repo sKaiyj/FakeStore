@@ -1,5 +1,5 @@
 import { Container, Box, Typography, Rating, Button } from "@mui/material";
-import CardImg from "../cardImg/CardImg";
+import CardImg from "../cardImg/cardImg";
 import { getOne } from "../../API/API";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
@@ -46,10 +46,14 @@ const BasketCard = ({ products }: any) => {
         justifyСontent: "center",
         boxShadow: 4,
         gridTemplateColumns: { xs: "1fr", md: "1fr 1fr 1fr" },
+        color: "#CFC5C5",
+        borderRadius: "16px",
       }}
       maxWidth='lg'
     >
-      <CardImg src={productData.image} height={300} width={300} />
+      <Box sx={{ margin: "20px 0" }}>
+        <CardImg src={productData.image} height={300} width={300} />
+      </Box>
       <Box>
         <Box
           sx={{
@@ -92,7 +96,7 @@ const BasketCard = ({ products }: any) => {
           <Button
             onClick={() => handleCount("minus")}
             sx={{ width: "100%", maxWidth: 500 }}
-            variant='outlined'
+            variant='contained'
           >
             -
           </Button>
@@ -100,7 +104,7 @@ const BasketCard = ({ products }: any) => {
           <Button
             onClick={() => handleCount("plus")}
             sx={{ width: "100%", maxWidth: 500 }}
-            variant='outlined'
+            variant='contained'
           >
             +
           </Button>

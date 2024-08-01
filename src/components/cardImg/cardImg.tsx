@@ -18,6 +18,7 @@ const CardImg = ({
         width: "100%",
         maxWidth: width,
         margin: "0 auto",
+        bgcolor: "white",
       }}
     >
       <img
